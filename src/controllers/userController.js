@@ -80,14 +80,15 @@ const getCurrentUser = async (req, res) => {
 
 const logout = async (req, res) => {
     try {
-        req.session.destroy(err => {
-            if (err) {
-                return res.json({ error: 'Failed to logout' });
-            }
-
-            res.clearCookie('sid'); // replace 'sid' with the name of your session cookie
-            return res.json({ message: 'Logged out successfully' });
-        });
+        return res
+            .status(200)
+            .cookie("token", "", {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                expires: new Date(Date.now() + 1000),
+                sameSite: "none"
+            })
+            .json({ message: "Login Successful", user, token })
     } catch (error) {
         console.log(error);
         return res.status(400).json({ message: error.message })
