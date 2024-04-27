@@ -88,7 +88,7 @@ const logout = async (req, res) => {
                 expires: new Date(Date.now() + 1000),
                 sameSite: "none"
             })
-            .json({ message: "Login Successful", user, token })
+            .json({ message: "Logout Successful" })
     } catch (error) {
         console.log(error);
         return res.status(400).json({ message: error.message })
