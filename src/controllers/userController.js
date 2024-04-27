@@ -70,7 +70,7 @@ const login = async (req, res) => {
 const getCurrentUser = async (req, res) => {
     try {
         const user = await User.findById(req.id).populate("todos")
-        console.log(user);
+        // console.log(user);
         return res.status(200).json({ user })
     } catch (error) {
         console.log(error);
@@ -78,9 +78,20 @@ const getCurrentUser = async (req, res) => {
     }
 }
 
+const logout = async (req, res) => {
+    try {
+        return res.status(200).clearCookie("token").json({ message: "Logged out successfully" })
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({ message: error.message })
+    }
+
+}
+
 
 export {
     register,
     login,
-    getCurrentUser
+    getCurrentUser,
+    logout
 }
